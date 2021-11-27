@@ -22,3 +22,5 @@ Route::apiResources([
     "expenses" => "ExpensesController",
     "auth" => "AuthController",
 ]);
+
+Route::post('login','AuthController@login');

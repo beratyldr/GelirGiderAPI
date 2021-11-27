@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,5 +30,18 @@ class AuthController extends Controller
 
         return response()->json(['success' => true, 'success' =>"You have successfuly added the new user"]);
 
+    }
+
+    public function login(Request $request){
+        if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            $user = Auth::user();
+            $success['token'] = $user->createToken('MyApp')->accessToken;
+            $success['user_id'] = $user->id;
+            $success['email'] = $user->email;
+            $success['name'] = $user->name;
+            return response()->json($success, 200);
+        } else {
+            return response()->json('Email veya şifre yanlış.', 401);
+        }
     }
 }
