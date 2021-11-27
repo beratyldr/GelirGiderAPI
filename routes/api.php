@@ -20,4 +20,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::apiResources([
     "expenses" => "ExpensesController",
+    "auth" => "AuthController",
 ]);
