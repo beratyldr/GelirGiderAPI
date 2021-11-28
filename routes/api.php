@@ -24,4 +24,3 @@ Route::apiResources([
 ]);
 
 Route::post('login','AuthController@login');
-Route::post('expenses','ExpensesController@store');
