@@ -18,6 +18,7 @@ class AuthController extends Controller
         ];
     
         $input     = $request->only('name', 'email','password');
+        
         $validator = Validator::make($input, $rules);
     
         if ($validator->fails()) {
@@ -34,8 +35,10 @@ class AuthController extends Controller
 
     public function login(Request $request){
         if (Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
+            /** @var \App\User $user **/
             $user = Auth::user();
-            $success['token'] = $user->createToken('MyApp')->accessToken;
+            $token = $user->createToken('Laravel Password Grant Client')->accessToken;
+            $success['token']=$token;
             $success['user_id'] = $user->id;
             $success['email'] = $user->email;
             $success['name'] = $user->name;
