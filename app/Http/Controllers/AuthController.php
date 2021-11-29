@@ -47,4 +47,9 @@ class AuthController extends Controller
             return response()->json('Email veya şifre yanlış.', 401);
         }
     }
+
+    public function index()
+    {       
+        return request()->user();
+    }
 }
