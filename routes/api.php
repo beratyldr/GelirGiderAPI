@@ -18,19 +18,26 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });*/
 
-//Route::group([ 'middleware' => 'auth:api'], function () {});
+Route::group([ 'middleware' => ['auth:api','cors']], function () {
 
-    
-Route::group(['prefix' => 'user'], function() {
-    Route::get('/', function() {
-        return auth()->guard('api')->user();
+
+    Route::group(['prefix' => 'user'], function() {
+        Route::get('/', function() {
+            return auth()->guard('api')->user();
+        });
     });
+    
+    
+    Route::apiResources([
+        "expenses" => "ExpensesController",
+        "category" =>"CategoryController"
+    ]);
+
+
 });
-
-
-Route::apiResources([
-    "expenses" => "ExpensesController",
-    "auth" => "AuthController",
-    "category" =>"CategoryController"
+Route::apiResources([  
+    "auth" => "AuthController", 
 ]);
+    
+
 Route::post('login','AuthController@login');
